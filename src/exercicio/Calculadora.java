@@ -1,6 +1,8 @@
-package deafio;
+package exercicio;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,6 +11,16 @@ import java.io.FileWriter;
 public class Calculadora {
     public static void main(String[] args) throws IOException {
         Scanner leitura = new Scanner(System.in);
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ofPattern(
+                "yyyy-MM-dd HH:mm:ss a");
+
+        String dateTimeString = now.format(formatter);
+
+        System.out.println(dateTimeString);
+
         int escolha = 0;
         double resultado = 0;
         double decimal1;
@@ -16,7 +28,7 @@ public class Calculadora {
 
         FileWriter escrita = new FileWriter("Historico.txt");
 
-        escrita.write("Historico Crescente\n");
+        escrita.write("Historico\n");
 
         while (escolha != 5){
             decimal1 = 0;
@@ -24,11 +36,11 @@ public class Calculadora {
             System.out.println("""
                                 Escolha o tipo de operação
                                 
-                                1- SOMA (+)
-                                2- SUBTRAÇÃO (-)
-                                3- DIVISÃO (/)
-                                4- MULTIPLICACAO (*)
-                                5- SAIR
+                                1 - SOMA (+)
+                                2 - SUBTRAÇÃO (-)
+                                3 - DIVISÃO (/)
+                                4 - MULTIPLICACAO (*)
+                                5 - SAIR
                                 """);
 
             try {
@@ -47,11 +59,11 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = soma(decimal1, decimal2);
+                    resultado = Operacao.soma(decimal1, decimal2);
 
-                    System.out.println(resultado);
+                    System.out.println("Resultado: " + resultado);
 
-                    escrita.write(decimal1 + "+ " + decimal2 + "= " + Double.toString(resultado) + "\n");
+                    escrita.write(dateTimeString + " -- " + decimal1 + " + " + decimal2 + " = " + Double.toString(resultado) + "\n");
 
                     break;
                 case 2:
@@ -62,11 +74,11 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = subtra(decimal1, decimal2);
+                    resultado = Operacao.subtra(decimal1, decimal2);
 
-                    System.out.println(resultado);
+                    System.out.println("Resultado: " + resultado);
 
-                    escrita.write(decimal1 + "- " + decimal2 + "= " +Double.toString(resultado)+"\n");
+                    escrita.write(dateTimeString + " -- " + decimal1 + " - " + decimal2 + " = " +Double.toString(resultado)+"\n");
 
                     break;
                 case 3:
@@ -77,11 +89,11 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = divisao(decimal1, decimal2);
+                    resultado = Operacao.divisao(decimal1, decimal2);
 
-                    System.out.println(resultado);
+                    System.out.println("Resultado: " + resultado);
 
-                    escrita.write(decimal1 + "/ " + decimal2 + "= " +Double.toString(resultado)+"\n");
+                    escrita.write(dateTimeString + " -- " + decimal1 + " / " + decimal2 + " = " +Double.toString(resultado)+"\n");
 
                     break;
                 case 4:
@@ -92,11 +104,11 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = multiplicacao(decimal1, decimal2);
+                    resultado = Operacao.multiplicacao(decimal1, decimal2);
 
-                    System.out.println(resultado);
+                    System.out.println("Resultado: " + resultado);
 
-                    escrita.write(decimal1 + "* " + decimal2 + "= " +Double.toString(resultado)+"\n");
+                    escrita.write(dateTimeString + " -- " + decimal1 + " * " + decimal2 + " = " +Double.toString(resultado)+"\n");
 
                     break;
 
@@ -110,31 +122,12 @@ public class Calculadora {
                     break;
 
                 default:
-                    escrita.close();
                     System.out.println("""
-                                Opcao invalida, finalizando sistema...
-                                
-                                Histórico gerado.
+                                Opcao invalida. Digite novamente.
                                 """);
                     break;
 
             }
         }
-    }
-
-    public static double soma(double num1, double num2){
-        return num1 + num2;
-    }
-
-    public static double subtra(double num1, double num2){
-        return num1 - num2;
-    }
-
-    public static double divisao(double num1, double num2){
-        return num1 / num2;
-    }
-
-    public static double multiplicacao(double num1, double num2){
-        return num1 * num2;
     }
 }
