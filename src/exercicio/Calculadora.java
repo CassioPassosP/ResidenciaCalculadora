@@ -1,17 +1,18 @@
 package exercicio;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.*;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import java.io.FileWriter;
 
 public class Calculadora {
     public static void main(String[] args) throws IOException {
         Scanner leitura = new Scanner(System.in);
         LocalDateTime now = LocalDateTime.now();
+
+        Operador operador = new Operador();
 
         DateTimeFormatter formatter
                 = DateTimeFormatter.ofPattern(
@@ -40,15 +41,15 @@ public class Calculadora {
                                 2 - SUBTRAÇÃO (-)
                                 3 - DIVISÃO (/)
                                 4 - MULTIPLICACAO (*)
-                                5 - SAIR
+                                5-  POTENCIACAO (**)
+                                6 - SAIR
                                 """);
 
             try {
                 escolha = leitura.nextInt();
             }  catch (InputMismatchException e) {
-                System.out.println("Tente inserir um valor inteiro.");
+                System.out.println("Tente inserir um numero inteiro de 1 a 6.");
                 escolha = 0;
-                break; // anotação: colocar para voltar para o sistema.
             }
 
             switch (escolha) {
@@ -59,7 +60,7 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = Operacao.soma(decimal1, decimal2);
+                    resultado = operador.soma.soma(decimal1, decimal2);
 
                     System.out.println("Resultado: " + resultado);
 
@@ -74,7 +75,7 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = Operacao.subtra(decimal1, decimal2);
+                    resultado = operador.subtra.subtra(decimal1, decimal2);
 
                     System.out.println("Resultado: " + resultado);
 
@@ -89,7 +90,7 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = Operacao.divisao(decimal1, decimal2);
+                    resultado = operador.divisao.divisao(decimal1, decimal2);
 
                     System.out.println("Resultado: " + resultado);
 
@@ -104,7 +105,7 @@ public class Calculadora {
                     System.out.println("Digite o segundo valor: ");
                     decimal2 = leitura.nextDouble();
 
-                    resultado = Operacao.multiplicacao(decimal1, decimal2);
+                    resultado = operador.multiplicacao.multiplicacao(decimal1, decimal2);
 
                     System.out.println("Resultado: " + resultado);
 
@@ -113,6 +114,20 @@ public class Calculadora {
                     break;
 
                 case 5:
+                    System.out.println("Digite o primeiro valor: ");
+                    decimal1 = leitura.nextDouble();
+
+                    System.out.println("Digite o segundo valor: ");
+                    decimal2 = leitura.nextDouble();
+
+                    resultado = operador.potencia.potenciaMath(decimal1, decimal2);
+
+                    System.out.println("Resultado: " + resultado);
+
+                    escrita.write(dateTimeString + " -- " + decimal1 + " ** " + decimal2 + " = " +Double.toString(resultado)+"\n");
+
+                    break;
+                case 6:
                     escrita.close();
                     System.out.println("""
                                 finalizando sistema...
